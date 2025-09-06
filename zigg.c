@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -125,7 +126,7 @@ uint32_t rand_uint32() {
     return (uint32_t)(rand() * 2) + (rand() > RAND_MAX_HALF);
 }
 
-// the uniform distribution on 0..RAND_MAX
+// the uniform distribution on 0..1
 double rand_uniform() {
     return (double)rand_uint32() / RAND_MAX_DOUBLE;
 }
@@ -154,9 +155,26 @@ double rand_gaussian() {
 
 int main(){
     srand(time(0));
-    for (size_t i = 0; i < 5; ++i){
-        double n = rand_gaussian();
-        printf("%lf\n", n);
-    }
-}
+    size_t n = 20000000;
 
+    if (0) {
+        FILE * f = fopen("sample.txt", "w");
+        if (f == NULL) {
+            printf("bad file\n");
+            return -1;
+        }
+        for (size_t i = 0; i < n; ++i){
+            double x = rand_gaussian();
+            fprintf(f, "%lf\n", x);
+            if (i % 100000 == 0) {
+                printf("%zu\n", i);
+            }
+        }
+    } else {
+        for (size_t i = 0; i < 5; ++i){
+            double x = rand_gaussian();
+            printf("%lf\n", x);
+        }
+    }
+    return 0;
+}

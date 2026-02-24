@@ -1,5 +1,4 @@
 #include <math.h>
-#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -121,7 +120,7 @@ static const double wtab[128] = {
 #define RAND_MAX_HALF RAND_MAX * 0.5
 #define RAND_MAX_DOUBLE RAND_MAX * 2
 
-// the uniform distribution on 0..RAND_MAX on the integers
+// the uniform distribution on 0..RAND_MAX_DOUBLE on the integers
 uint32_t rand_uint32() {
     return (uint32_t)(rand() * 2) + (rand() > RAND_MAX_HALF);
 }
@@ -153,7 +152,7 @@ double rand_gaussian() {
     return sign ? x : -x;
 }
 
-int main(){
+int main(void){
     srand(time(0));
     size_t n = 20000000;
 
